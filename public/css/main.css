@@ -21,6 +21,16 @@ body {
 	font-size: 16px;
 	margin: 0;
 	padding: 0;
+
+	background-size: cover;
+	background-color: #DA1515;
+
+	height: 100vh;
+	width: 100vw;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 header {
@@ -34,9 +44,19 @@ p {
 	margin: 8px 0 0 0;
 }
 
+.container {
+	width: 80vw;
+	height: auto;
+}
+
 .container p {
 	text-align: center;
 	padding: 0;
+}
+
+svg {
+	width: 100%;
+	height: auto;
 }
 
 /****** Header Styling ******/
@@ -78,8 +98,14 @@ header a ~ p {
 /****** Login Styling ******/
 
 .login {
-	margin: 86px auto 0 auto;
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login > * {
+	margin: 20px 0;
 }
 
 #login-btn {
@@ -99,17 +125,22 @@ header a ~ p {
 
 /****** Logo Div Styling ******/
 
-img {
-	margin: 0 auto;
-	display: block;
+#line1, #line2{
+	animation: draw 4s infinite linear;
 }
 
-.clementine-text { /* Styling for the Clementine.js text */
+@keyframes draw {
+	to {
+		stroke-dashoffset: 223.6;
+	}
+}
+
+.FCC-text { /* FCC Bars */
 	padding: 0;
-	margin: -25px 0 0 0;
+	margin: 0;
 	font-weight: 500;
 	font-size: 60px;
-	color: #FFA000;
+	color: #ABABAB;
 }
 
 /****** Click Styling ******/

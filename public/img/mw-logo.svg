@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="600" x="0" y="0" viewBox="0 0 700 600">
+	
+	<path stroke="#000" stroke-width="10" fill="none" d="M0 600l200-400 100 200 100-200 100 200L700 0"/>
+	<rect stroke="#000" stroke-width="30" fill="none" x="0" y="0" width="700" height="600"/>
+	<path id="line1" stroke-dasharray="22.36, 22.36" stroke="#000" stroke-width="10" fill="none" d="M100 0l100 200"/>
+	<path id="line2" stroke-dasharray="22.36, 22.36" stroke="#000" stroke-width="10" fill="none" d="M600 600L500 400"/>
+	
+</svg>
