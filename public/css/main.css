@@ -7,6 +7,8 @@
   src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
 }
 
+@import url(https://fonts.googleapis.com/css?family=Raleway:300);
+
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -105,7 +107,7 @@ header a ~ p {
 }
 
 .login > * {
-	margin: 20px 0;
+	margin: 25px 0;
 }
 
 #login-btn {
@@ -138,8 +140,9 @@ header a ~ p {
 .FCC-text { /* FCC Bars */
 	padding: 0;
 	margin: 0;
+	font-family: 'Raleway', sans-serif;
 	font-weight: 500;
-	font-size: 60px;
+	font-size: 25px;
 	color: #ABABAB;
 }
 
@@ -153,14 +156,24 @@ header a ~ p {
 .btn {	/* Styling for buttons */
 	margin: 0 8px;
 	color: white;
-	background-color: #00BCD4;
 	display: inline-block;
 	border: 0;
 	font-size: 14px;
 	border-radius: 3px;
 	padding: 10px 5px;
-	width: 100px;
+	width: 100%;
+	border-bottom: 1px solid gray;
+	border-top: 1px solid gray;
 	font-weight: 500;
+	box-shadow: 0 0 6px -5px #ccc,
+				0 0 6px -5px #ccc;
+	transition: box-shadow .5s;
+}
+
+.btn:hover {
+	box-shadow: 0 8px 6px -5px #ccc,
+				0 -8px 6px -5px #ccc;
+	transition: box-shadow .5s;
 }
 
 .btn:focus {	/* Remove outline when hovering over button */
@@ -233,3 +246,57 @@ span {
 	display: inline;
 	margin: 0;
 }
+
+/*Media Queries*/
+
+@media screen and (min-width: 400px) {
+	svg {
+		width: 90%;
+	}
+	.svg-path {
+		stroke-width: 13;
+	}
+	.login > * {
+		margin: 25px 0;
+	}
+	.FCC-text {
+		font-size: 33px;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	svg {
+		width: 70%;
+	}
+	.FCC-text {
+		font-size: 40px;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	svg {
+		width: 54%;
+	}
+}
+
+@media screen and (min-width: 1100px) {
+	svg {
+		width: 45%;
+	}
+}
+
+@media screen and (min-width: 1300px) {
+	svg {
+		width: 40%;
+	}
+	.login > * {
+		margin: 30px 0;
+	}
+}
+
+@media screen and (min-width: 1450px) {
+	svg {
+		width: 420px;
+	}
+}
+
