@@ -4,7 +4,6 @@ var main = function() {
 
 	var nav = $('nav');
 	var pulldown = $('#nav-pulldown');
-	var navTimeout = 500;
 
 	// animates navbar
 	pulldown.mouseenter(function() {
@@ -15,7 +14,7 @@ var main = function() {
 		$(this).removeClass('bounceInDown').addClass('bounceOutUp');
 		setTimeout(function() {
 			nav.removeClass('slideOutUp').addClass('slideInDown animated');
-		}, navTimeout);
+		}, 500);
 	});
 
 	$(document).mouseup(function(e) {
@@ -23,7 +22,7 @@ var main = function() {
 			nav.removeClass('slideInDown').addClass('slideOutUp');
 			setTimeout(function() {
 				pulldown.removeClass('bounceOutUp').addClass('bounceInDown');
-			}, navTimeout);
+			}, 300);
 		}
 	});
 
