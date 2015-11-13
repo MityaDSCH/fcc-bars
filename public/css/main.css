@@ -54,7 +54,7 @@ p {
 	padding: 0;
 }
 
-svg {
+#mw-logo-login {
 	width: 100%;
 	height: auto;
 }
@@ -73,6 +73,11 @@ svg {
 	position: absolute;
 	top: 10px;
 	left: 10px;
+}
+
+.fa-inverse {
+	text-shadow: 0 0 3px white,
+				 0 0 5px white;
 }
 
 nav {
@@ -210,7 +215,7 @@ nav a ~ p {
 	margin: 0;
 	font-family: 'Raleway', sans-serif;
 	font-size: 25px;
-	color: #ABABAB;
+	color: #CCC;
 }
 
 /****** Click Styling ******/
@@ -310,10 +315,10 @@ span {
 	#nav-container {
 		width: 60%;
 	}
-	svg {
+	#mw-logo-login {
 		width: 90%;
 	}
-	.svg-path {
+	.#mw-logo-login-path {
 		stroke-width: 13;
 	}
 	.login > * {
@@ -328,7 +333,7 @@ span {
 	#nav-container {
 		width: 55%;
 	}
-	svg {
+	#mw-logo-login {
 		width: 70%;
 	}
 	.FCC-text {
@@ -340,14 +345,14 @@ span {
 	#nav-container {
 		width: 50%;
 	}
-	svg {
+	#mw-logo-login {
 		width: 54%;
 	}
 }
 
 @media screen and (min-width: 1100px) {
 	nav {
-		left: 10%;
+		left: 10px;
 		height: 40vh;
 		width: 200px;
 	}
@@ -373,7 +378,7 @@ span {
 	nav {
 		height: 35vh;
 	}
-	svg {
+	#mw-logo-login {
 		width: 40%;
 	}
 	.login > * {
@@ -382,7 +387,7 @@ span {
 }
 
 @media screen and (min-width: 1450px) {
-	svg {
+	#mw-logo-login {
 		width: 420px;
 	}
 }
