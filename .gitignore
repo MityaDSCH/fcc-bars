@@ -1,4 +1,5 @@
 node_modules/
+bower_components/
 .eslintrc
 .env
 README.md

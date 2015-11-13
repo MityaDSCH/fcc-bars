@@ -7,7 +7,12 @@
   src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
 }
 
-@import url(https://fonts.googleapis.com/css?family=Raleway:200);
+@font-face {
+	font-family: 'Raleway',
+	font-style: normal;
+	font-weight: 200;
+	src: local('Raleway Black'), url('../fonts/Raleway-Black.ttf') format('truetype');
+}
 
 @font-face {
   font-family: 'Roboto';
