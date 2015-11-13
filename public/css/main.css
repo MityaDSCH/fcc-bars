@@ -59,7 +59,21 @@ svg {
 	height: auto;
 }
 
+.hide-init {
+	visibility: hidden;
+}
+
+.hide-init.animated {
+	visibility: visible;
+}
+
 /****** nav Styling ******/
+
+#nav-pulldown {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
 
 nav {
 	position: fixed;
@@ -340,8 +354,11 @@ span {
 	#nav-container {
 		flex-direction: column;
 	}
-	#nav-container .divider {
+	.hide-widescreen {
 		display: none;
+	}
+	.show-widescreen {
+		display: block;
 	}
 	#nav-container hr {
 		display: block;
