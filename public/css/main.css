@@ -7,7 +7,7 @@
   src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
 }
 
-@import url(https://fonts.googleapis.com/css?family=Raleway:300);
+@import url(https://fonts.googleapis.com/css?family=Raleway:200);
 
 @font-face {
   font-family: 'Roboto';
@@ -35,13 +35,6 @@ body {
 	justify-content: center;
 }
 
-header {
-	color: #00BCD4;
-	height: 56px;
-	margin: 0 0 14px 0;
-	text-align: center;
-}
-
 p {
 	margin: 8px 0 0 0;
 }
@@ -61,16 +54,34 @@ svg {
 	height: auto;
 }
 
-/****** Header Styling ******/
+/****** nav Styling ******/
 
-header p {
-	margin: 16px 0 5px 0;
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	height: 50px;
+	background-color: #444;
+
+}
+
+#nav-container {
+	height: 100%;
+	width: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }
 
 .menu {
 	text-decoration: none;
-	padding: 6px;
-	margin: 0;
+	padding: 6px -1px;
+	margin: 6px;
 	color: #727272;
 }
 
@@ -79,14 +90,18 @@ header p {
 }
 
 .menu:hover {
-	color: #FFA000;
+	color: #CCC;
 }
 
-.menu:active {
-	color: #FF630D;
+.menu.active {
+	color: #CCC;
 }
 
-header a ~ p {
+.menu.active:hover {
+	cursor: default;
+}
+
+nav a ~ p {
 	margin: 0;
 	padding: 0;
 	display: inline;
@@ -113,6 +128,15 @@ header a ~ p {
 #login-btn {
 	width: 225px;
 	padding: 7px 5px;
+	box-shadow: 0 0 6px -5px #ccc,
+				0 0 6px -5px #ccc;
+	transition: box-shadow .5s;
+}
+
+#login-btn:hover {
+	box-shadow: 0 8px 6px -5px #ccc,
+				0 -8px 6px -5px #ccc;
+	transition: box-shadow .5s;
 }
 
 .btn p {
@@ -141,7 +165,6 @@ header a ~ p {
 	padding: 0;
 	margin: 0;
 	font-family: 'Raleway', sans-serif;
-	font-weight: 500;
 	font-size: 25px;
 	color: #ABABAB;
 }
@@ -164,16 +187,6 @@ header a ~ p {
 	width: 100%;
 	border-bottom: 1px solid gray;
 	border-top: 1px solid gray;
-	font-weight: 500;
-	box-shadow: 0 0 6px -5px #ccc,
-				0 0 6px -5px #ccc;
-	transition: box-shadow .5s;
-}
-
-.btn:hover {
-	box-shadow: 0 8px 6px -5px #ccc,
-				0 -8px 6px -5px #ccc;
-	transition: box-shadow .5s;
 }
 
 .btn:focus {	/* Remove outline when hovering over button */
@@ -250,6 +263,9 @@ span {
 /*Media Queries*/
 
 @media screen and (min-width: 400px) {
+	#nav-container {
+		width: 60%;
+	}
 	svg {
 		width: 90%;
 	}
@@ -265,6 +281,9 @@ span {
 }
 
 @media screen and (min-width: 600px) {
+	#nav-container {
+		width: 55%;
+	}
 	svg {
 		width: 70%;
 	}
@@ -274,12 +293,26 @@ span {
 }
 
 @media screen and (min-width: 800px) {
+	#nav-container {
+		width: 50%;
+	}
 	svg {
 		width: 54%;
 	}
 }
 
 @media screen and (min-width: 1100px) {
+	nav {
+		left: 10%;
+		height: 30vh;
+		width: 20%;
+	}
+	#nav-container {
+		flex-direction: column;
+	}
+	#nav-container p {
+		display: none;
+	}
 	svg {
 		width: 45%;
 	}
