@@ -2,10 +2,34 @@
 
 var main = function() {
 
+
+	// animates search chevron in and out --------------------------------------------------------
+	var search = $('#search');
+	var btn = $('#search-button');
+
+	search.keypress(function() {
+		if (search.val().length > 0) {
+			btn.addClass('animated rollIn');
+		}
+	});
+
+	search.focusout(function() {
+		if (search.val().length === 0) {
+			btn.removeClass('rollIn').addClass('rollOut');
+		}
+	});
+
+	// animates search chevron hover effect ------------------------------------------------------
+	btn.mouseenter(function() {
+		$(this).addClass('fa-inverse');
+	}).mouseleave(function() {
+		$(this).removeClass('fa-inverse');
+	});
+
+	// animates navbar ---------------------------------------------------------------------------
 	var nav = $('nav');
 	var pulldown = $('#nav-pulldown');
 
-	// animates navbar
 	pulldown.mouseenter(function() {
 		$(this).addClass('fa-inverse');
 	}).mouseleave(function() {

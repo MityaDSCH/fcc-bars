@@ -67,6 +67,33 @@ p {
 	visibility: visible;
 }
 
+#search {
+	width: 83px;
+
+	background-color: rgba(0,0,0,0);
+	border: none;
+	outline: 0;
+	border-bottom: 1px solid white;
+
+	font-family: 'Raleway', 'Garamond';
+	font-size: 20px;
+	color: white;
+	transition: width 1s cubic-bezier(.18,.94,.14,1);
+}
+
+#search:focus, #search:valid {
+	width: 80%;
+	transition: width 1s cubic-bezier(.18,.94,.14,1);
+}
+
+#search-button {
+	margin: 10px 0 0 10px;
+}
+
+#search-button.animated {
+	visibility: visible;
+}
+
 /****** nav Styling ******/
 
 #nav-pulldown {
@@ -118,6 +145,7 @@ nav {
 
 .menu.active {
 	color: #CCC;
+	pointer-events: none;
 }
 
 .menu.active:hover {
@@ -149,6 +177,10 @@ nav a ~ p {
 	text-align: center;
 	font-size: 12px;
 	color: #CCC;
+}
+
+.show-widescreen {
+	display: none;
 }
 
 #mwlogo-nav {
@@ -372,17 +404,22 @@ span {
 	#mwlogo-nav {
 		display: block;
 	}
+
+	#search {
+		font-size: 27px;
+		width: 110px;
+	}
 }
 
 @media screen and (min-width: 1300px) {
-	nav {
-		height: 35vh;
-	}
 	#mw-logo-login {
 		width: 40%;
 	}
 	.login > * {
 		margin: 30px 0;
+	}
+	#search:focus, #search:valid {
+		width: 70%;
 	}
 }
 

@@ -10,26 +10,30 @@
 		<link href="/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	</head>
 
-	<div id="nav-pulldown" class="animated">
-		<i id="fa-pulldown" class="fa fa-chevron-circle-down fa-2x"></i>
-	</div>
-
-	<nav class="hide-init">
-		<div id="nav-container">
-			<a class="menu active" href="/">Home</a>
-			<p class="hide-widescreen">|</p>
-			<a class="menu" href="/profile">Profile</a>
-			<p class="hide-widescreen">|</p>
-			<a class="menu" href="/logout">Logout</a>
-			<hr/>
-			<div> 
-				<p id="nav-credit-text" class="show-widescreen" style="display: none;">Website By:</p>
-				<img id="mwlogo-nav" src="public/img/mw-logo-index.svg"/>
-			</div>
-		</div>
-	</nav>	
-
 	<body>
+
+		<div id="nav-pulldown" class="animated">
+			<i id="fa-pulldown" class="fa fa-chevron-circle-down fa-2x"></i>
+		</div>
+
+		<nav class="hide-init">
+			<div id="nav-container">
+				<a class="menu active" href="/">Home</a>
+				<p class="hide-widescreen">|</p>
+				<a class="menu" href="/profile">Profile</a>
+				<p class="hide-widescreen">|</p>
+				<a class="menu" href="/logout">Logout</a>
+				<hr/>
+				<div> 
+					<p id="nav-credit-text" class="show-widescreen">Website By:</p>
+					<img id="mwlogo-nav" src="public/img/mw-logo-index.svg"/>
+				</div>
+			</div>
+		</nav>	
+
+		<input id="search" type="text" placeholder="Where to?" required="true">
+			<i id="search-button" class="fa fa-chevron-right fa-lg hide-init"></i> 
+		</input>
 		
 		<script type="text/javascript" src="public/bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="public/js/ajax-functions.js"></script>
