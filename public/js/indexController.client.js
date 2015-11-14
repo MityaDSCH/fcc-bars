@@ -9,7 +9,7 @@ var main = function() {
 
 	search.keypress(function() {
 		if (search.val().length > 0) {
-			btn.addClass('animated rollIn');
+			btn.removeClass('rollOut').addClass('animated rollIn');
 		}
 	});
 
