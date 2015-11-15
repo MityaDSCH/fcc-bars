@@ -2,6 +2,7 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var YelpHandler = require(path + '/app/controllers/yelpApi.server.js');
 
 module.exports = function (app, passport) {
 
@@ -14,7 +15,7 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
-
+ 
 	app.route('/')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/index.html');
@@ -54,4 +55,10 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
+
+	app.route('/api/yelp/:location')
+		.get(function(req, res) {
+			var yelpHandler = new YelpHandler();
+			yelpHandler.searchYelp(req, res)
+		});
 };

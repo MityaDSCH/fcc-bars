@@ -2,7 +2,6 @@
 
 var main = function() {
 
-
 	// animates search chevron in and out --------------------------------------------------------
 	var search = $('#search');
 	var btn = $('#search-button');
@@ -21,9 +20,13 @@ var main = function() {
 
 	// animates search chevron hover effect ------------------------------------------------------
 	btn.mouseenter(function() {
-		$(this).addClass('fa-inverse');
+		if (!$(this).hasClass('fa-spin')) {
+  		$(this).addClass('fa-inverse');
+		}
 	}).mouseleave(function() {
-		$(this).removeClass('fa-inverse');
+		if (!$(this).hasClass('fa-spin')) {
+			$(this).removeClass('fa-inverse');
+		}
 	});
 
 	// animates navbar ---------------------------------------------------------------------------
@@ -49,6 +52,35 @@ var main = function() {
 			}, 300);
 		}
 	});
+
+	// registers enter and chevron click to api request ------------------------------------------
+	$(document).keypress(function(e) {
+	   if (e.which == 13 && search.val().length > 0 && search.is(":focus")) {
+	     searchYelp(search.val().replace(' ', '+'));
+	   }
+	});
+
+	btn.click(function() {
+		if (search.val().length > 0) {
+			searchYelp(search.val());
+		}
+	});
+
+	// search yelp function ------------------------------------------------------------------------
+
+	function searchYelp(str) {
+
+		// remove chevron and add spinner
+		btn.removeClass('rollIn fa-chevron-right').addClass('fa-circle-o-notch fa-spin fa-inverse');
+
+		var loc = str.replace(' ', '+');
+		ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', '/api/yelp/' + loc, function(data) {
+			var result = JSON.parse(data);
+			console.log(result);
+			btn.removeClass('fa-spin').addClass('fadeOutUp');
+		}));
+	  
+	}
 
 };
 
