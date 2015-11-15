@@ -5,9 +5,10 @@
    var apiUrl = appUrl + '/api/:id';
 
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
+      
       var userObject = JSON.parse(data);
-
-      console.log('done', data);
+      console.log(userObject);
+      $('#username-display').text('Hello ' + userObject.username);
 
    }));
 
