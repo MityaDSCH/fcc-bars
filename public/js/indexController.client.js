@@ -10,7 +10,6 @@ var main = function() {
 		if (search.val().length > 0) {
 			btn.removeClass('rollOut').addClass('animated rollIn');
 		}
-		console.log(search.val().length, btn.hasClass('rollIn'));
 		if (search.val().length === 0 && btn.hasClass('rollIn')) {
 			btn.removeClass('rollIn').addClass('rollOut');
 		}
@@ -81,7 +80,7 @@ var main = function() {
 		ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', '/api/yelp/' + loc, function(data) {
 			var result = JSON.parse(data);
 			console.log(result);
-			btn.removeClass('fa-spin').addClass('fadeOutUp');
+			btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
 		}));
 	  
 	}
