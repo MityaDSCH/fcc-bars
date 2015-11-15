@@ -78,9 +78,23 @@ var main = function() {
 
 		var loc = str.replace(' ', '+');
 		ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', '/api/yelp/' + loc, function(data) {
+
+			$('body').css('align-items', 'flex-start');
+			$('#result-container').css('display', 'flex');
+
 			var result = JSON.parse(data);
 			console.log(result);
 			btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
+
+			result.businesses.forEach(function(business, index) {
+				setTimeout(function() {
+					$('#result-container').append("<div class='result animated bounceInLeft'>" + 
+						"<img src='" + business.image_url + "'/>" +
+						"<a href='" + business.url + "'>" + business.name + "</a>" +
+						"<p>" + business.snippet_text + "</p>" +
+						"</div>");
+				},index*100);
+			});
 		}));
 	  
 	}
