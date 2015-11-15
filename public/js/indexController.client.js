@@ -6,9 +6,13 @@ var main = function() {
 	var search = $('#search');
 	var btn = $('#search-button');
 
-	search.keypress(function() {
+	search.keyup(function() {
 		if (search.val().length > 0) {
 			btn.removeClass('rollOut').addClass('animated rollIn');
+		}
+		console.log(search.val().length, btn.hasClass('rollIn'));
+		if (search.val().length === 0 && btn.hasClass('rollIn')) {
+			btn.removeClass('rollIn').addClass('rollOut');
 		}
 	});
 
