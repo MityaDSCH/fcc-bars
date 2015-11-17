@@ -34,11 +34,6 @@ body {
 
 	height: 100vh;
 	width: 100vw;
-
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
 }
 
 p {
@@ -68,10 +63,28 @@ p {
 	visibility: visible;
 }
 
+#search-container {
+
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+	height: 30px;
+	width: 100%;
+	transition: all .8s ease-in-out;
+
+	margin-bottom: 30px;
+
+	display: flex;
+	justify-content: center;
+}
+
+#search .to-top {
+	top: 80px;
+}
+
 #search {
 	width: 83px;
 	transform: translateX(15px);
-	margin-top: 80px;
 
 	background-color: rgba(0,0,0,0);
 	border: none;
@@ -89,7 +102,7 @@ p {
 }
 
 #search-button {
-	margin: 110px 0 30px 25px;
+	margin: 12px 0 0 25px;
 }
 
 #search-button.animated {
@@ -212,27 +225,62 @@ nav a ~ p {
 /****** Result Styling ******/
 
 #result-container {
-	width: 80%;
+	position: absolute;
+	top: 130px;
+
+	width: 100%;
+
 	display: none;
-	flex-direction: column;
-	align-items: space-around;
-	justify-content: space-around;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: center;
 }
 
 .result {
-	width: 80%;
-	margin: 25px 0;
+	width: 150px;
+	height: 150px;
+
+	margin: 16px;
+}
+
+.result img {
+	padding: 25px;
+	border-radius: 8px;
+}
+
+.result span {
+	position: absolute;
+	top: 35px;
+	left: 25px;
+	width: auto;
+	max-width: 100px;
 
 	font-family: "Raleway";
 	font-size: 16px;
-}
-
-.result a {
 	text-decoration: none;
 	color: white;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+
+	background-color: rgba(4, 4, 4, .7);
+}
+
+.result h3 {
+	margin: 0;
 }
 
 /****** Login Styling ******/
+
+#login-wrap {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 .login {
 	text-align: center;
@@ -410,6 +458,16 @@ span {
 	.FCC-text {
 		font-size: 40px;
 	}
+	#result-container{ 
+		top: 145px;
+	}
+}
+
+@media screen and (min-width: 720px) {
+	#result-container {
+		width: 80%;
+		margin: 0 10%;
+	}
 }
 
 @media screen and (min-width: 800px) {
@@ -418,6 +476,10 @@ span {
 	}
 	#mw-logo-login {
 		width: 54%;
+	}
+	#result-container {
+		width: 70%;
+		margin: 0 15%;
 	}
 }
 
@@ -447,6 +509,10 @@ span {
 	#search {
 		font-size: 27px;
 		width: 110px;
+	}
+	#result-container {
+		width: 65%;
+		margin: 0 17.5%;
 	}
 }
 

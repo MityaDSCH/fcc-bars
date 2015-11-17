@@ -64,14 +64,37 @@ var main = function() {
 	});
 
 	btn.click(function() {
-		if (search.val().length > 0) {
+		// seatr search
+		if (search.val().length > 0 && btn.hasClass('fa-chevron-right')) {
 			searchYelp(search.val());
 		}
+		// clear search results
+		if (btn.hasClass('fa-times')) {
+			resetResults();
+		}
 	});
+
+	function resetResults() {
+
+		search.attr('readOnly', false).val('').css('text-align', 'left');
+		btn.removeClass('rollIn').addClass('rollOut');
+		$('#results-title').addClass('animated fadeOutLeft');
+		$('.result').each(function() {
+			$(this).addClass('fadeOutLeft');
+		});
+		setTimeout(function() {
+			$('#result-container').html('').css('display', 'none');
+			$('#search-container').css('margin-top', 0).css('width', '');
+			$('body').css('align-items', 'center');
+			btn.removeClass('fa-times').addClass('fa-chevron-right');
+		}, 1000);
+	}
 
 	// search yelp function ------------------------------------------------------------------------
 
 	function searchYelp(str) {
+
+		var result = {};
 
 		// remove chevron and add spinner
 		btn.removeClass('rollIn fa-chevron-right').addClass('fa-circle-o-notch fa-spin fa-inverse');
@@ -79,22 +102,37 @@ var main = function() {
 		var loc = str.replace(' ', '+');
 		ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', '/api/yelp/' + loc, function(data) {
 
-			$('body').css('align-items', 'flex-start');
-			$('#result-container').css('display', 'flex');
-
 			var result = JSON.parse(data);
 			console.log(result);
-			btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
 
-			result.businesses.forEach(function(business, index) {
+			if (result.businesses !== undefined) {
+
+				search.attr('readOnly', true);
+				$('#result-container').css('display', 'flex');
+
+				// set search bar
+				btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
 				setTimeout(function() {
-					$('#result-container').append("<div class='result animated bounceInLeft'>" + 
-						"<img src='" + business.image_url + "'/>" +
-						"<a href='" + business.url + "'>" + business.name + "</a>" +
-						"<p>" + business.snippet_text + "</p>" +
-						"</div>");
-				},index*100);
-			});
+					btn.removeClass('fa-circle-o-notch fa-inverse').addClass('rollIn fa-times');
+				}, 1000);
+
+				// send search bar to top of page
+				$('#search-container').css('top', '10%');
+
+				// append results
+				result.businesses.forEach(function(business, index) {
+					setTimeout(function() {
+						$('#result-container').append("<div class='result animated bounceInLeft'>" + 
+							"<img src='" + business.image_url + "'/>" +
+							"<span><h3>" + business.name + "</h3>" + "</span>" +
+							"</div>");
+					},index*100);
+				});
+			} else {
+				btn.removeClass('fa-circle-o-notch fa-spin fa-inverse').addClass('fa-chevron-right');
+				search.val('Not Found, Try Again');
+			}
+
 		}));
 	  
 	}
