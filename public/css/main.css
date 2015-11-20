@@ -112,12 +112,14 @@ p {
 	font-family: 'Raleway', 'Garamond';
 	font-size: 20px;
 	font-weight: 500;
-	transition: width 1s cubic-bezier(.18,.94,.14,1);
+	text-align: center;
+	transition: all 1s cubic-bezier(.18,.94,.14,1);
 }
 
 #search:focus, #search:valid {
 	width: 80%;
-	transition: width 1s cubic-bezier(.18,.94,.14,1);
+	text-align: left;
+	transition: all 1s cubic-bezier(.18,.94,.14,1);
 }
 
 #search-button {
@@ -267,8 +269,14 @@ nav a ~ p {
 .result img {
 	width: 250px;
 	height: 250px;
-	padding: 25px;
-	border-radius: 8px;
+	margin: 25px;
+
+	box-shadow: 0 0 5px 1px #444;
+	transition: box-shadow .5s;
+}
+
+.result img.highlight {
+	box-shadow: 0 0 5px 2.5px black;
 }
 
 .result span {
@@ -289,7 +297,13 @@ nav a ~ p {
 	-ms-hyphens: auto;
 	hyphens: auto;
 
-	background-color: rgba(4, 4, 4, .7);
+	background-color: rgba(0, 0, 0, .7);
+	transition: all .6s ease-in-out;
+}
+
+.result span.highlight {
+	background-color: black;
+	padding: 3px 5px 3px 5px;
 }
 
 .result h3 {

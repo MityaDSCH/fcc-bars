@@ -76,7 +76,7 @@ var main = function() {
 
 	function resetResults() {
 
-		search.attr('readOnly', false).val('').css('text-align', 'left');
+		search.attr('readOnly', false).val('');
 		btn.removeClass('rollIn').addClass('rollOut');
 		$('#results-title').addClass('animated fadeOutLeft');
 		$('.result').each(function(index) {
@@ -126,14 +126,28 @@ var main = function() {
 					// append results
 					result.businesses.forEach(function(business) {
 						$('#result-container').append("<div class='result hide-init'>" + 
-							"<img src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
+							"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
 							"<span><h3>" + business.name + "</h3>" + "</span>" +
 							"</div>");
 
 						$('.result').each(function(index) {
 							var ele = $(this);
 							setTimeout(function() {
+
+								//animate in
 								ele.addClass('fadeInRight animated');
+
+								//attach animation handlers
+								var span = ele.find('span');
+								var img = ele.find('img');
+								img.hover(function() {
+									img.addClass('highlight');
+									span.addClass('highlight');
+								}, function() {
+									img.removeClass('highlight');
+									span.removeClass('highlight');
+								});
+
 							}, index*60);
 						})
 					});
