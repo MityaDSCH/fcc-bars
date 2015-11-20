@@ -8,10 +8,25 @@
 }
 
 @font-face {
-	font-family: 'Raleway',
-	font-style: normal;
-	font-weight: 200;
-	src: local('Raleway Black'), url('../fonts/Raleway-Black.ttf') format('truetype');
+  font-family: "Raleway";
+  src: url('../bower_components/raleway/fonts/regular/raleway-regular.eot');
+  src: url('../bower_components/raleway/fonts/regular/raleway-regular.eot?#iefix') format('embedded-opentype'),
+  url('../bower_components/raleway/fonts/regular/raleway-regular.woff') format('woff'),
+  url('../bower_components/raleway/fonts/regular/raleway-regular.ttf') format('truetype'),
+  url('../bower_components/raleway/fonts/regular/raleway-regular.svg#ralewayregular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Raleway";
+  src: url('../bower_components/raleway/fonts/medium/raleway-medium.eot');
+  src: url('../bower_components/raleway/fonts/medium/raleway-medium.eot?#iefix') format('embedded-opentype'),
+  url('../bower_components/raleway/fonts/medium/raleway-medium.woff') format('woff'),
+  url('../bower_components/raleway/fonts/medium/raleway-medium.ttf') format('truetype'),
+  url('../bower_components/raleway/fonts/medium/raleway-medium.svg#ralewaymedium') format('svg');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
@@ -78,21 +93,25 @@ p {
 	justify-content: center;
 }
 
-#search .to-top {
-	top: 80px;
+#search-container.to-top {
+	top: 10%;
+	transition: all .8s ease-in-out;
 }
 
 #search {
-	width: 83px;
+	width: 100px;
 	transform: translateX(15px);
 
 	background-color: rgba(0,0,0,0);
 	border: none;
 	outline: 0;
 	border-bottom: 1px solid white;
+	height: 20px;
+	padding-bottom: 9px;
 
 	font-family: 'Raleway', 'Garamond';
 	font-size: 20px;
+	font-weight: 500;
 	transition: width 1s cubic-bezier(.18,.94,.14,1);
 }
 
@@ -112,9 +131,10 @@ p {
 /****** nav Styling ******/
 
 #nav-pulldown {
-	position: absolute;
+	position: fixed;
 	top: 10px;
 	left: 10px;
+	z-index: 2;
 }
 
 .fa-inverse {
@@ -134,6 +154,7 @@ p {
 	font-family: 'Raleway', 'Garamond';
 	color: white;
 	font-size: 16px;
+	font-weight: 500;
 }
 
 nav {
@@ -237,26 +258,29 @@ nav a ~ p {
 }
 
 .result {
-	width: 150px;
-	height: 150px;
+	width: 300px;
+	height: 300px;
 
 	margin: 16px;
 }
 
 .result img {
+	width: 250px;
+	height: 250px;
 	padding: 25px;
 	border-radius: 8px;
 }
 
 .result span {
 	position: absolute;
-	top: 35px;
+	top: 210px;
 	left: 25px;
 	width: auto;
-	max-width: 100px;
+	max-width: 240px;
+	padding: 3px 5px 3px 2px;
 
-	font-family: "Raleway";
-	font-size: 16px;
+	font-family: 'Raleway';
+
 	text-decoration: none;
 	color: white;
 	word-wrap: break-word;
@@ -270,6 +294,9 @@ nav a ~ p {
 
 .result h3 {
 	margin: 0;
+	font-weight: 500;
+	font-size: 23px;
+	letter-spacing: .6px;
 }
 
 /****** Login Styling ******/
@@ -405,10 +432,6 @@ nav a ~ p {
 	font-weight: 400;
 }
 
-span {
-	font-weight: 500;
-}
-
 .github-profile > img {
 	padding-top: 16px;
 	margin-bottom: 16px;
@@ -463,10 +486,10 @@ span {
 	}
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 700px) {
 	#result-container {
-		width: 80%;
-		margin: 0 10%;
+		width: 84%;
+		margin: 0 3%;
 	}
 }
 
@@ -478,8 +501,8 @@ span {
 		width: 54%;
 	}
 	#result-container {
-		width: 70%;
-		margin: 0 15%;
+		width: 90%;
+		margin: 0 5%;
 	}
 }
 
@@ -507,12 +530,8 @@ span {
 	}
 
 	#search {
-		font-size: 27px;
-		width: 110px;
-	}
-	#result-container {
-		width: 65%;
-		margin: 0 17.5%;
+		font-size: 26.5px;
+		width: 128px;
 	}
 }
 
@@ -531,6 +550,13 @@ span {
 @media screen and (min-width: 1450px) {
 	#mw-logo-login {
 		width: 420px;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	#result-container {
+		width: 80%;
+		margin: 0 10%;
 	}
 }
 

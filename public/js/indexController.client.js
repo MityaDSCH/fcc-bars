@@ -79,12 +79,15 @@ var main = function() {
 		search.attr('readOnly', false).val('').css('text-align', 'left');
 		btn.removeClass('rollIn').addClass('rollOut');
 		$('#results-title').addClass('animated fadeOutLeft');
-		$('.result').each(function() {
-			$(this).addClass('fadeOutLeft');
+		$('.result').each(function(index) {
+			var ele = $(this);
+			setTimeout(function() {
+				ele.addClass('fadeOutDown');
+			},index*60);
 		});
 		setTimeout(function() {
 			$('#result-container').html('').css('display', 'none');
-			$('#search-container').css('margin-top', 0).css('width', '');
+			$('#search-container').removeClass('to-top').css('width', '');
 			$('body').css('align-items', 'center');
 			btn.removeClass('fa-times').addClass('fa-chevron-right');
 		}, 1000);
@@ -117,17 +120,25 @@ var main = function() {
 				}, 1000);
 
 				// send search bar to top of page
-				$('#search-container').css('top', '10%');
+				$('#search-container').addClass('to-top');
 
-				// append results
-				result.businesses.forEach(function(business, index) {
-					setTimeout(function() {
-						$('#result-container').append("<div class='result animated bounceInLeft'>" + 
-							"<img src='" + business.image_url + "'/>" +
+				setTimeout(function() {
+					// append results
+					result.businesses.forEach(function(business) {
+						$('#result-container').append("<div class='result hide-init'>" + 
+							"<img src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
 							"<span><h3>" + business.name + "</h3>" + "</span>" +
 							"</div>");
-					},index*100);
-				});
+
+						$('.result').each(function(index) {
+							var ele = $(this);
+							setTimeout(function() {
+								ele.addClass('fadeInRight animated');
+							}, index*60);
+						})
+					});
+				}, 800);
+				
 			} else {
 				btn.removeClass('fa-circle-o-notch fa-spin fa-inverse').addClass('fa-chevron-right');
 				search.val('Not Found, Try Again');
