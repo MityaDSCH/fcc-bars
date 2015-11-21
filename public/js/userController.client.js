@@ -6,9 +6,10 @@
 
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
       
-      var userObject = JSON.parse(data);
-      console.log(userObject);
-      $('#username-display').text('Hello ' + userObject.username);
+      var user = JSON.parse(data);
+      window.USER = user;
+      console.log(user);
+      $('#username-display').text('Hello ' + user.username);
 
    }));
 

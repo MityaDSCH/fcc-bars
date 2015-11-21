@@ -74,6 +74,7 @@ var main = function() {
 		}
 	});
 
+	// clear yelp search results -------------------------------------------------------------------
 	function resetResults() {
 
 		search.attr('readOnly', false).val('');
@@ -121,12 +122,17 @@ var main = function() {
 				// send search bar to top of page
 				$('#search-container').addClass('to-top');
 
+				// append results
 				setTimeout(function() {
-					// append results
 					result.businesses.forEach(function(business) {
 						$('#result-container').append("<div class='result hide-init'>" + 
-							"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
-							"<span><h3>" + business.name + "</h3>" + "</span>" +
+								"<div class='img-container'>" +
+									"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
+									"<div class='img-modal'></div>" +
+									"<span class='business-title'><h3>" + business.name + "</h3>" + "</span>" +
+									"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
+									"<span class='cover'></span>" +
+								"</div>" +
 							"</div>");
 
 						$('.result').each(function(index) {
@@ -134,17 +140,41 @@ var main = function() {
 							setTimeout(function() {
 
 								//animate in
-								ele.addClass('fadeInRight animated');
+								ele.addClass('fadeInUp animated');
 
 								//attach animation handlers
-								var span = ele.find('span');
+								var title = ele.find('.business-title');
 								var img = ele.find('img');
-								img.hover(function() {
-									img.addClass('highlight');
-									span.addClass('highlight');
+								var modal = ele.find('.img-modal');
+								var cover = ele.find('.cover');
+								var info = ele.find('.business-info');
+								cover.hover(function() {
+									if (!modal.hasClass('show-info')) {
+										img.addClass('highlight');
+										title.addClass('highlight');
+									}
 								}, function() {
-									img.removeClass('highlight');
-									span.removeClass('highlight');
+									if (!modal.hasClass('show-info')) {
+										img.removeClass('highlight');
+										title.removeClass('highlight');
+									}
+								});
+
+								cover.click(function() {
+									if (!modal.hasClass('show-info')) {
+										modal.addClass('show-info');
+										title.addClass('show-info');
+										setTimeout(function() {
+											info.removeClass('zoomOut').addClass('animated zoomIn')
+										}, 700);
+									} else if (info.hasClass('zoomIn')) {
+										info.removeClass('zoomIn').addClass('zoomOut');
+										setTimeout(function() {
+											modal.removeClass('show-info');
+											title.removeClass('show-info');
+										}, 700);
+									}
+									
 								});
 
 							}, index*60);
