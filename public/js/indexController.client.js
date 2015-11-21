@@ -78,19 +78,18 @@ var main = function() {
 
 		search.attr('readOnly', false).val('');
 		btn.removeClass('rollIn').addClass('rollOut');
-		$('#results-title').addClass('animated fadeOutLeft');
 		$('.result').each(function(index) {
 			var ele = $(this);
 			setTimeout(function() {
-				ele.addClass('fadeOutDown');
+				ele.addClass('fadeOutLeft');
 			},index*60);
 		});
 		setTimeout(function() {
 			$('#result-container').html('').css('display', 'none');
-			$('#search-container').removeClass('to-top').css('width', '');
+			$('#search-container').removeClass('to-top');
 			$('body').css('align-items', 'center');
 			btn.removeClass('fa-times').addClass('fa-chevron-right');
-		}, 1000);
+		}, 1500);
 	}
 
 	// search yelp function ------------------------------------------------------------------------
