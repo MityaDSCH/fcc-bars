@@ -9,11 +9,11 @@ var User = new Schema({
 		displayName: String,
 		username: String,
       	publicRepos: Number,
-      	goingToday: {
-      		type: Object,
-      		default: []
-      	}
-	}
+	},
+	goingToday: {
+  		type: Object,
+  		default: []
+  	}
 });
 
 module.exports = mongoose.model('User', User);

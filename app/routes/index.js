@@ -1,7 +1,7 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var BarHandler = require(path + '/app/controllers/barHandler.server.js');
 var YelpHandler = require(path + '/app/controllers/yelpApi.server.js');
 
 module.exports = function (app, passport) {
@@ -14,7 +14,7 @@ module.exports = function (app, passport) {
 		}
 	}
 
-	var clickHandler = new ClickHandler();
+	var barHandler = new BarHandler();
  
 	app.route('/')
 		.get(isLoggedIn, function (req, res) {
@@ -51,10 +51,10 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
+	app.route('/api/bars/:id')
+		.get(isLoggedIn, barHandler.getClicks)
+		.post(isLoggedIn, barHandler.addBar)
+		.delete(isLoggedIn, barHandler.resetClicks);
 
 	app.route('/api/yelp/:location')
 		.get(function(req, res) {

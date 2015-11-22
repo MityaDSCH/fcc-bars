@@ -2,7 +2,7 @@
 
 var Users = require('../models/users.js');
 
-function ClickHandler () {
+function BarHandler () {
 
 	this.getClicks = function (req, res) {
 		Users
@@ -14,13 +14,15 @@ function ClickHandler () {
 			});
 	};
 
-	this.addClick = function (req, res) {
+	this.addBar = function (req, res) {
+		var today = new Date();
+		today = today.getDate();
 		Users
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { $inc: { 'nbrClicks.clicks': 1 } })
+			.findOneAndUpdate({ 'github.id': req.user.github.id }, { $push: { 'barId': req.bar.Id, 'night': today} })
 			.exec(function (err, result) {
 					if (err) { throw err; }
 
-					res.json(result.nbrClicks);
+					res.json(result.goingToday);
 				}
 			);
 	};
@@ -38,4 +40,4 @@ function ClickHandler () {
 
 }
 
-module.exports = ClickHandler;
+module.exports = BarHandler;

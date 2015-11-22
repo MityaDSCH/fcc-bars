@@ -123,7 +123,7 @@ var main = function() {
 				// send search bar to top of page
 				$('#search-container').addClass('to-top');
 
-				// append results
+				// append results after search container gots to top, then attach animation controllers
 				setTimeout(function() {
 					result.businesses.forEach(function(business) {
 						$('#result-container').append("<div class='result hide-init'>" + 
@@ -136,62 +136,86 @@ var main = function() {
 									"<div class='going-btn'>Going?</div>" +
 								"</div>" +
 							"</div>");
-
-						$('.result').each(function(index) {
-							var ele = $(this);
-							setTimeout(function() {
-
-								//animate in
-								ele.addClass('fadeInUp animated');
-
-								//attach animation handlers
-								var title = ele.find('.business-title');
-								var img = ele.find('img');
-								var modal = ele.find('.img-modal');
-								var cover = ele.find('.cover');
-								var info = ele.find('.business-info');
-								var goingBtn = ele.find('.going-btn');
-								cover.hover(function() {
-									if (!modal.hasClass('show-info')) {
-										img.addClass('highlight');
-										title.addClass('highlight');
-									}
-								}, function() {
-									if (!modal.hasClass('show-info')) {
-										img.removeClass('highlight');
-										title.removeClass('highlight');
-									}
-								});
-
-								cover.click(function() {
-									if (!modal.hasClass('show-info')) {
-										modal.addClass('show-info');
-										title.addClass('show-info');
-										setTimeout(function() {
-											info.removeClass('slideOutRight').addClass('animated slideInRight');
-											goingBtn.removeClass('slideOutLeft').addClass('animated slideInLeft');
-										}, 700);
-									} else if (info.hasClass('slideInRight')) {
-										info.removeClass('slideInRight').addClass('slideOutRight');
-										goingBtn.removeClass('slideInLeft').addClass('slideOutLeft');
-										setTimeout(function() {
-											modal.removeClass('show-info');
-											title.removeClass('show-info');
-										}, 700);
-									}
-									
-								});
-
-								goingBtn.mouseenter(function() {
-									goingBtn.removeClass('slideInLeft').addClass('swing');
-								}).mouseleave(function() {
-									goingBtn.removeClass('swing');
-								});
-
-							}, index*60);
-						})
 					});
+
+					// fade in results
+					$('.result').each(function(index, ele) {
+						setTimeout(function() {
+							$(ele).addClass('fadeInUp animated');
+						}, index*60);
+					});
+
+					// defines animations based on interaction with .cover, in its own function because then I can do some fucked up scope things
+					(function() {
+						// defines .result elements relative to elements you interact with
+						var title = function(cover) {
+							return $(cover).siblings('.business-title');
+						};
+						var wrap = function(cover) {
+							return $(cover).parent();
+						};
+						var modal = function(cover) {
+							return $(cover).siblings('.img-modal');
+						};
+						var info = function(cover) {
+							return $(cover).siblings('.business-info');
+						};
+						var goingBtn = function(cover) {
+							return $(cover).siblings('.going-btn');
+						};
+
+						// add/remove hover classes for bar squares
+						$('.cover').hover(function() {
+							if (!modal(this).hasClass('show-info')) {
+								wrap(this).addClass('highlight');
+								title(this).addClass('highlight');
+							}
+						}, function() {
+							if (!modal(this).hasClass('show-info')) {
+								wrap(this).removeClass('highlight');
+								title(this).removeClass('highlight');
+							}
+						}).click(function() { // trigger click animations
+
+							// define ele because of this scope in setTimeout
+							var cmodal = modal(this);
+							var ctitle = title(this);
+							var cinfo = info(this);
+							var cgoingBtn = goingBtn(this);
+							var cwrap = wrap(this);
+
+							if(!cmodal.hasClass('show-info')) {
+								cmodal.addClass('show-info');
+								ctitle.addClass('show-info');
+								setTimeout(function() {
+									cinfo.removeClass('slideOutRight').addClass('animated slideInRight');
+									cgoingBtn.removeClass('slideOutLeft').addClass('animated slideInLeft');
+								}, 700);
+							} else if (cinfo.hasClass('slideInRight')) {
+								cinfo.removeClass('slideInRight').addClass('slideOutRight');
+								cgoingBtn.removeClass('slideInLeft').addClass('slideOutLeft');
+								setTimeout(function() {
+									cmodal.removeClass('show-info');
+									ctitle.removeClass('show-info highlight');
+									cwrap.removeClass('highlight');
+								}, 700);
+							}
+						});
+					})();
+					
+					$('.going-btn').mouseenter(function() {
+						$(this).removeClass('slideInLeft').addClass('swing');
+					}).mouseleave(function() {
+						$(this).removeClass('swing');
+					}).click(function() {
+						console.log(window.USER);
+						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/' + window.USER.id, function(data) {
+							console.log(data);
+						}));
+					});
+
 				}, 800);
+
 				
 			} else {
 				btn.removeClass('fa-circle-o-notch fa-spin fa-inverse').addClass('fa-chevron-right');
