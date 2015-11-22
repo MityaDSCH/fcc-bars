@@ -327,7 +327,7 @@ nav a ~ p {
 	background-color: rgba(0, 0, 0, .7);
 	transition: padding .6s ease-in-out,
 				background-color .6s ease-in-out,
-				top 1s ease-out;
+				top 1s cubic-bezier(.86,.08,.32,.99);
 }
 
 .business-title.highlight {
