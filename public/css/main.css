@@ -264,8 +264,6 @@ nav a ~ p {
 	width: 300px;
 	height: 300px;
 
-	overflow: hidden;
-
 	margin: 16px 5px;
 }
 
@@ -276,11 +274,14 @@ nav a ~ p {
 	width: 250px;
 	height: 250px;
 	margin: 25;
+
+	overflow: hidden;
 }
 
 .result img {
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 
 	box-shadow: 0 0 5px 1px #444;
 	transition: box-shadow .5s;
@@ -335,7 +336,7 @@ nav a ~ p {
 }
 
 .business-title.show-info {
-	top: 15px;
+	top: 10px;
 }
 
 .result h3 {
@@ -347,9 +348,10 @@ nav a ~ p {
 
 .business-info {
 	position: absolute;
-	top: 60px;
+	top: 50px;
 	left: 10px;
 	width: 230px;
+	height: 135px;
 
 	text-align: right;
 	font-family: 'Raleway';
@@ -357,6 +359,8 @@ nav a ~ p {
 	font-size: 18px;
 
 	visibility: hidden;
+
+	overflow: hidden;
 }
 
 .business-info.animated {
@@ -370,6 +374,38 @@ nav a ~ p {
 	width: 100%;
 	height: 100%;
 	z-index: 2;
+}
+
+.going-btn {
+	position: absolute;
+	height: 30px;
+	width: 150px;
+	top: 198px;
+	left: 50px;
+	z-index: 3;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-family: "Raleway";
+	font-size: 20px;
+	font-weight: 500;
+
+	border: 1px solid black;
+	transition: border .5s ease-in-out,
+				color .5s ease-in-out;
+
+	visibility: hidden;
+}
+
+.going-btn:hover {
+	border: 1px solid #DA1515;
+	color: #DA1515;
+}
+
+.going-btn.animated {
+	visibility: visible;
 }
 
 /****** Login Styling ******/

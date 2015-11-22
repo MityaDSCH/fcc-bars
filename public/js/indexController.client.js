@@ -80,9 +80,10 @@ var main = function() {
 		search.attr('readOnly', false).val('');
 		btn.removeClass('rollIn').addClass('rollOut');
 		$('.result').each(function(index) {
+			console.log('hi');
 			var ele = $(this);
 			setTimeout(function() {
-				ele.addClass('fadeOutLeft');
+				ele.removeClass('fadeInUp').addClass('fadeOutUp');
 			},index*60);
 		});
 		setTimeout(function() {
@@ -132,6 +133,7 @@ var main = function() {
 									"<span class='business-title'><h3>" + business.name + "</h3>" + "</span>" +
 									"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
 									"<span class='cover'></span>" +
+									"<div class='going-btn'>Going?</div>" +
 								"</div>" +
 							"</div>");
 
@@ -148,6 +150,7 @@ var main = function() {
 								var modal = ele.find('.img-modal');
 								var cover = ele.find('.cover');
 								var info = ele.find('.business-info');
+								var goingBtn = ele.find('.going-btn');
 								cover.hover(function() {
 									if (!modal.hasClass('show-info')) {
 										img.addClass('highlight');
@@ -165,16 +168,24 @@ var main = function() {
 										modal.addClass('show-info');
 										title.addClass('show-info');
 										setTimeout(function() {
-											info.removeClass('zoomOut').addClass('animated zoomIn')
+											info.removeClass('slideOutRight').addClass('animated slideInRight');
+											goingBtn.removeClass('slideOutLeft').addClass('animated slideInLeft');
 										}, 700);
-									} else if (info.hasClass('zoomIn')) {
-										info.removeClass('zoomIn').addClass('zoomOut');
+									} else if (info.hasClass('slideInRight')) {
+										info.removeClass('slideInRight').addClass('slideOutRight');
+										goingBtn.removeClass('slideInLeft').addClass('slideOutLeft');
 										setTimeout(function() {
 											modal.removeClass('show-info');
 											title.removeClass('show-info');
 										}, 700);
 									}
 									
+								});
+
+								goingBtn.mouseenter(function() {
+									goingBtn.removeClass('slideInLeft').addClass('swing');
+								}).mouseleave(function() {
+									goingBtn.removeClass('swing');
 								});
 
 							}, index*60);
