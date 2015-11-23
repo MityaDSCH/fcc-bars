@@ -55,16 +55,6 @@ p {
 	margin: 8px 0 0 0;
 }
 
-.container {
-	width: 80vw;
-	height: auto;
-}
-
-.container p {
-	text-align: center;
-	padding: 0;
-}
-
 #mw-logo-login {
 	width: 100%;
 	height: auto;
@@ -171,6 +161,8 @@ nav {
 	align-content: center;
 	height: 50px;
 	background-color: #444;
+
+	box-shadow: 0 0 3px 1px black;
 }
 
 #nav-container {
@@ -212,7 +204,7 @@ nav a ~ p {
 	color: #ECEFF1;
 }
 
-#nav-container hr {
+hr {
 	display: none;
 	width: 100%;
 	margin: 0;
@@ -535,50 +527,26 @@ nav a ~ p {
 
 /****** Profile Styling ******/
 
-.github-profile {
-	width: 350px;
-	height: 200px;
-	border-radius: 3px;
-	margin: 86px auto 0 auto;
-	background-color: #EEE;
-	text-align: center;
+#profile-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#profile-container hr {
+	display: block;
+}
+
+#profile-name {
 	color: #000;
-}
-
-.github-profile p:first-child {
-	padding-top: 16px;
-}
-
-.github-profile p:nth-child(5) {
-	margin-bottom: 16px
-}
-
-.github-profile p {
-	margin: 0 0 0 16px;
-	text-align: left;
-}
-
-.profile-value {
+	font-family: 'Raleway';
 	font-weight: 400;
-}
+	font-size: 20px;
 
-.github-profile > img {
-	padding-top: 16px;
-	margin-bottom: 16px;
-}
-
-.github-profile .menu:hover {
-	color: #FFA000;
-}
-
-.github-profile .menu:active {
-	color: #FF630D;
-}
-
-#menu-divide {
-	color: #FFFFFF;
-	display: inline;
-	margin: 0;
+	height: auto;
 }
 
 /*Media Queries*/
