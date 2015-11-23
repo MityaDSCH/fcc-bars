@@ -328,9 +328,17 @@ nav a ~ p {
 				top 1s cubic-bezier(.86,.08,.32,.99);
 }
 
+.business-title.going {
+	background-color: rgba(218, 21, 21, .7);
+}
+
 .business-title.highlight {
 	background-color: black;
 	padding: 3px 5px 3px 5px;
+}
+
+.business-title.going.highlight {
+	background-color: #DA1515;
 }
 
 .business-title.show-info {
@@ -410,6 +418,15 @@ nav a ~ p {
 
 .going-btn.animated {
 	visibility: visible;
+}
+
+.going-btn.going {
+	border: 2px solid #DA1515;
+	color: #DA1515;
+}
+
+.going-btn i {
+	margin-left: 10px;
 }
 
 /****** Login Styling ******/

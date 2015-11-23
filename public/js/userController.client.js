@@ -9,7 +9,7 @@
       var user = JSON.parse(data);
       window.USER = user;
       console.log(window.USER);
-      $('#username-display').text('Hello ' + user.username);
+      $('#username-display').text('Hello ' + (typeof user.github.username === 'undefined' ? 'Stranger' : user.github.username));
 
    }));
 

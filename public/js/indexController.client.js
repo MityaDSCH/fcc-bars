@@ -82,7 +82,7 @@ var main = function() {
 		$('.result').each(function(index) {
 			var ele = $(this);
 			setTimeout(function() {
-				ele.removeClass('fadeInUp').addClass('fadeOutUp');
+				ele.removeClass('fadeInUp').addClass('fadeOutDown');
 			},index*60);
 		});
 		setTimeout(function() {
@@ -126,19 +126,21 @@ var main = function() {
 				setTimeout(function() {
 					result.businesses.forEach(function(business) {
 
-						// find if going to business today
-
-						$('#result-container').append("<div class='result hide-init' id='" + business.id + "'>" + 
-								"<div class='img-container'>" +
-									"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
-									"<div class='img-modal'></div>" +
-									"<span class='business-title'><a href='" + business.url+ "'><h3>" + business.name + "</h3></a></span>" +
-									"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
-									"<span class='cover'></span>" +
-									"<div class='going-btn'>Going?</div>" +
-								"</div>" +
-							"</div>");
+						if (typeof business.image_url !== 'undefined') {
+							$('#result-container').append("<div class='result hide-init' id='" + business.id + "'>" + 
+									"<div class='img-container'>" +
+										"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
+										"<div class='img-modal'></div>" +
+										"<span class='business-title'><a href='" + business.url+ "'><h3>" + business.name + "</h3></a></span>" +
+										"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
+										"<span class='cover'></span>" +
+										"<div class='going-btn'>Going?</div>" +
+									"</div>" +
+								"</div>");
+						}
 					});
+
+					updateGoing();
 
 					// fade in results
 					$('.result').each(function(index, ele) {
@@ -206,15 +208,16 @@ var main = function() {
 					})();
 					
 					$('.going-btn').mouseenter(function() {
-						$(this).removeClass('slideInLeft').addClass('swing');
+						if (!$(this).hasClass('going')) $(this).removeClass('slideInLeft').addClass('swing');
 					}).mouseleave(function() {
 						$(this).removeClass('swing');
 					}).click(function() {
 						var barId = $(this).parents('.result').attr('id');
+						var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
 						// post querystring with bar name to update goingTo field in User model
 						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/id=' + window.USER.id + 
 																			  '&barId=' + barId + 
-																			  '&add=true', 
+																			  '&add=' + addBoolString, 
 																			  function(data) {
 							// get the new User model
 							var apiUrl = appUrl + '/api/:id';
@@ -222,6 +225,7 @@ var main = function() {
 						      var user = JSON.parse(data);
 						      window.USER = user;
 						      console.log(window.USER);
+						      updateGoing();
 						   }));
 
 						}));
@@ -238,6 +242,23 @@ var main = function() {
 		}));
 	  
 	}
+
+	function updateGoing() {
+		var goingIds = window.USER.goingToday.map(function(ele) {
+			return ele.barId;
+		});
+		$('.result').each(function() {
+			var curBtn = $(this).find('.going-btn');
+			var curTitle = $(this).find('.business-title');
+			if (goingIds.indexOf($(this).attr('id')) !== -1) {
+				curBtn.html('Going! <i class="fa fa-glass"></i>').removeClass('swing').addClass('going');
+				curTitle.addClass('going');
+			} else if (curBtn.hasClass('going')) {
+				curBtn.text('Going?').removeClass('going');
+				curTitle.removeClass('going');
+			}
+		});
+	};
 
 };
 
