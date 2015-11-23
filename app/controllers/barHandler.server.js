@@ -8,8 +8,13 @@ function BarHandler () {
 	this.addBar = function (req, res) {
 		var today = Date.now();
 		Users.findOne({ 'github.id': req.user.github.id }, function(err, user) { 
-			var barId = querystring.parse(req.url).barId;
-			var add = querystring.parse(req.url).add === 'true';
+			console.log(req.body);
+			var url = querystring.parse(req.url);
+			var barId = url.barId;
+			var add = url.add === 'true';
+			var barTitle = url.barTitle;
+			var barDesc = url.barDesc;
+			var barImg = url.barImg + '.jpg';
 			var curTime = Date.now();
 			// get rid of entries more than 24hrs old or if the request deletes it
 			var newArr = user.goingToday.filter(function(ele) {

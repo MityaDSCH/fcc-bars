@@ -4,6 +4,18 @@
 
 var main = function() {
 
+	function getUser(callback) {
+		var apiUrl = appUrl + '/api/:id';
+		$.get(apiUrl , function( user ) {
+	      window.USER = user;
+	      console.log(window.USER);
+	      $('#username-display').text('Hello ' + (typeof user.github.username === 'undefined' ? 'Stranger' : user.github.username));
+	      if (typeof callback === 'function') callback();
+	   });
+	}
+
+	getUser();
+
 	// animates search chevron in and out --------------------------------------------------------
 	var search = $('#search');
 	var btn = $('#search-button');
@@ -80,10 +92,8 @@ var main = function() {
 		// remove chevron and add spinner
 		btn.removeClass('rollIn fa-chevron-right').addClass('fa-circle-o-notch fa-spin fa-inverse');
 
-		var loc = str.replace(' ', '+');
-		ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', '/api/yelp/' + loc, function(data) {
+		$.get( "/api/yelp/" + str.replace(' ', '+'), function( result ) {
 
-			var result = JSON.parse(data);
 			console.log(result);
 
 			if (result.businesses !== undefined) {
@@ -191,22 +201,21 @@ var main = function() {
 						$(this).removeClass('swing');
 					}).click(function() {
 						var barId = $(this).parents('.result').attr('id');
+						var barTitle = $(this).siblings('.business-title').text();
+						var barDesc = $(this).siblings('.business-info').text();
+						var barImg = $(this).siblings('.res-img').attr('src').replace('.jpg', '');
 						var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
 						// post querystring with bar name to update goingTo field in User model
-						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/id=' + window.USER.id + 
+						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/id=' + window.USER.github.id +
 																			  '&barId=' + barId + 
-																			  '&add=' + addBoolString, 
+																			  '&add=' + addBoolString,	
 																			  function(data) {
 							// get the new User model
-							var apiUrl = appUrl + '/api/:id';
-							ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
-						      var user = JSON.parse(data);
-						      window.USER = user;
-						      console.log(window.USER);
-						      updateGoing();
-						   }));
+							
+							getUser(updateGoing);
 
-						}));
+
+						}, {'hi':'hello'}));
 					});
 
 				}, 800);
@@ -217,7 +226,7 @@ var main = function() {
 				search.val('Not Found, Try Again');
 			}
 
-		}));
+		});
 	  
 	}
 
@@ -236,7 +245,7 @@ var main = function() {
 				curTitle.removeClass('going');
 			}
 		});
-	};
+	}
 
 };
 
