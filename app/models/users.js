@@ -16,4 +16,8 @@ var User = new Schema({
   	}
 });
 
+User.pre('find', function() {
+	console.log('working!');
+});
+
 module.exports = mongoose.model('User', User);

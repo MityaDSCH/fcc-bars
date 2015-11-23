@@ -9,7 +9,6 @@
       var user = JSON.parse(data);
       window.USER = user;
       console.log(window.USER);
-      console.log(user);
       $('#username-display').text('Hello ' + user.username);
 
    }));

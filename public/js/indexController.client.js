@@ -80,7 +80,6 @@ var main = function() {
 		search.attr('readOnly', false).val('');
 		btn.removeClass('rollIn').addClass('rollOut');
 		$('.result').each(function(index) {
-			console.log('hi');
 			var ele = $(this);
 			setTimeout(function() {
 				ele.removeClass('fadeInUp').addClass('fadeOutUp');
@@ -126,11 +125,14 @@ var main = function() {
 				// append results after search container gots to top, then attach animation controllers
 				setTimeout(function() {
 					result.businesses.forEach(function(business) {
-						$('#result-container').append("<div class='result hide-init'>" + 
+
+						// find if going to business today
+
+						$('#result-container').append("<div class='result hide-init' id='" + business.id + "'>" + 
 								"<div class='img-container'>" +
 									"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
 									"<div class='img-modal'></div>" +
-									"<span class='business-title'><h3>" + business.name + "</h3>" + "</span>" +
+									"<span class='business-title'><a href='" + business.url+ "'><h3>" + business.name + "</h3></a></span>" +
 									"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
 									"<span class='cover'></span>" +
 									"<div class='going-btn'>Going?</div>" +
@@ -208,9 +210,20 @@ var main = function() {
 					}).mouseleave(function() {
 						$(this).removeClass('swing');
 					}).click(function() {
-						console.log(window.USER);
-						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/' + window.USER.id, function(data) {
-							console.log(data);
+						var barId = $(this).parents('.result').attr('id');
+						// post querystring with bar name to update goingTo field in User model
+						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/id=' + window.USER.id + 
+																			  '&barId=' + barId + 
+																			  '&add=true', 
+																			  function(data) {
+							// get the new User model
+							var apiUrl = appUrl + '/api/:id';
+							ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
+						      var user = JSON.parse(data);
+						      window.USER = user;
+						      console.log(window.USER);
+						   }));
+
 						}));
 					});
 

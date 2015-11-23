@@ -316,8 +316,6 @@ nav a ~ p {
 
 	font-family: 'Raleway';
 
-	text-decoration: none;
-	color: white;
 	word-wrap: break-word;
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
@@ -337,6 +335,12 @@ nav a ~ p {
 
 .business-title.show-info {
 	top: 10px;
+	z-index: 4;
+}
+
+.business-title a {
+	text-decoration: none;
+	color: white;
 }
 
 .result h3 {

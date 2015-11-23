@@ -39,7 +39,7 @@ module.exports = function (app, passport) {
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
+			res.json(req.user);
 		});
 
 	app.route('/auth/github')
@@ -52,9 +52,7 @@ module.exports = function (app, passport) {
 		}));
 
 	app.route('/api/bars/:id')
-		.get(isLoggedIn, barHandler.getClicks)
 		.post(isLoggedIn, barHandler.addBar)
-		.delete(isLoggedIn, barHandler.resetClicks);
 
 	app.route('/api/yelp/:location')
 		.get(function(req, res) {
