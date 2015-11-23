@@ -5,10 +5,9 @@
 var main = function() {
 
 	function getUser(callback) {
-		var apiUrl = appUrl + '/api/:id';
+		var apiUrl = window.location.origin + '/api/:id';
 		$.get(apiUrl , function( user ) {
 	      window.USER = user;
-	      console.log(window.USER);
 	      $('#username-display').text('Hello ' + (typeof user.github.username === 'undefined' ? 'Stranger' : user.github.username));
 	      if (typeof callback === 'function') callback();
 	   });
@@ -94,8 +93,6 @@ var main = function() {
 
 		$.get( "/api/yelp/" + str.replace(' ', '+'), function( result ) {
 
-			console.log(result);
-
 			if (result.businesses !== undefined) {
 
 				search.attr('readOnly', true);
@@ -126,6 +123,18 @@ var main = function() {
 									"</div>" +
 								"</div>");
 						}
+					});
+
+					// extract required data for each business
+					var businessesObj = {};
+					result.businesses.forEach(function(business) {
+						businessesObj[business.id] = {
+							'barId': business.id,
+							'name': business.name,
+							'url': business.url,
+							'img': business.image_url,
+							'desc': business.snippet_text,
+						};
 					});
 
 					updateGoing();
@@ -201,21 +210,16 @@ var main = function() {
 						$(this).removeClass('swing');
 					}).click(function() {
 						var barId = $(this).parents('.result').attr('id');
-						var barTitle = $(this).siblings('.business-title').text();
-						var barDesc = $(this).siblings('.business-info').text();
-						var barImg = $(this).siblings('.res-img').attr('src').replace('.jpg', '');
+						var busObj = businessesObj[$(this).parents('.result').attr('id')];
 						var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
-						// post querystring with bar name to update goingTo field in User model
-						ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', '/api/bars/id=' + window.USER.github.id +
-																			  '&barId=' + barId + 
-																			  '&add=' + addBoolString,	
-																			  function(data) {
-							// get the new User model
-							
+						$.ajax({
+							url: '/api/bars/id=' + window.USER.github.id + '&barId=' + barId + '&add=' + addBoolString,
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify(busObj)
+						}).done(function(data) {
 							getUser(updateGoing);
-
-
-						}, {'hi':'hello'}));
+						});
 					});
 
 				}, 800);

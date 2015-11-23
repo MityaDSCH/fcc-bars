@@ -2,16 +2,12 @@
 
 var main = function() {
 
-	var apiUrl = appUrl + '/api/:id';
-
-   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
-      
-	    var user = JSON.parse(data);
+	var apiUrl = window.location.origin + '/api/:id';
+	$.get(apiUrl , function( user ) {
 	    window.USER = user;
-	    console.log(window.USER);
-	   	$("#profile-name").html('@' + window.USER.github.username);
-
-   }));
+	    $("#profile-name").html('@' + window.USER.github.username);
+	    if (typeof callback === 'function') callback();
+	});
 
 };
 
