@@ -75,7 +75,7 @@ var main = function() {
 			},index*60);
 		});
 		setTimeout(function() {
-			$('#result-container').html('').css('display', 'none');
+			$('#result-container').html('').removeClass('show');
 			$('#search-container').removeClass('to-top');
 			$('body').css('align-items', 'center');
 			btn.removeClass('fa-times').addClass('fa-chevron-right');
@@ -96,7 +96,7 @@ var main = function() {
 			if (result.businesses !== undefined) {
 
 				search.attr('readOnly', true);
-				$('#result-container').css('display', 'flex');
+				$('#result-container').addClass('show');
 
 				// set search bar
 				btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
