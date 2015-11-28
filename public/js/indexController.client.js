@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
 
 // a too-long js file
 
@@ -95,143 +95,148 @@ var main = function() {
 
 			if (result.businesses !== undefined) {
 
-				search.attr('readOnly', true);
-				$('#result-container').addClass('show');
+				pushBars(result);
 
-				// set search bar
-				btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
-				setTimeout(function() {
-					btn.removeClass('fa-circle-o-notch fa-inverse').addClass('rollIn fa-times');
-				}, 1000);
-
-				// send search bar to top of page
-				$('#search-container').addClass('to-top');
-
-				// append results after search container gots to top, then attach animation controllers
-				setTimeout(function() {
-					result.businesses.forEach(function(business) {
-
-						if (typeof business.image_url !== 'undefined') {
-							$('#result-container').append("<div class='result hide-init' id='" + business.id + "'>" + 
-									"<div class='img-container'>" +
-										"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
-										"<div class='img-modal'></div>" +
-										"<span class='business-title'><a href='" + business.url+ "'><h3>" + business.name + "</h3></a></span>" +
-										"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
-										"<span class='cover'></span>" +
-										"<div class='going-btn'>Going?</div>" +
-									"</div>" +
-								"</div>");
-						}
-					});
-
-					// extract required data for each business
-					var businessesObj = {};
-					result.businesses.forEach(function(business) {
-						businessesObj[business.id] = {
-							'barId': business.id,
-							'name': business.name,
-							'url': business.url,
-							'img': business.image_url,
-							'desc': business.snippet_text,
-						};
-					});
-
-					updateGoing();
-
-					// fade in results
-					$('.result').each(function(index, ele) {
-						setTimeout(function() {
-							$(ele).addClass('fadeInUp animated');
-						}, index*60);
-					});
-
-					// defines animations based on interaction with .cover, in its own function because then I can do some fucked up scope things
-					(function() {
-						// defines .result elements relative to elements you interact with
-						var title = function(cover) {
-							return $(cover).siblings('.business-title');
-						};
-						var wrap = function(cover) {
-							return $(cover).parent();
-						};
-						var modal = function(cover) {
-							return $(cover).siblings('.img-modal');
-						};
-						var info = function(cover) {
-							return $(cover).siblings('.business-info');
-						};
-						var goingBtn = function(cover) {
-							return $(cover).siblings('.going-btn');
-						};
-
-						// add/remove hover classes for bar squares
-						$('.cover').hover(function() {
-							if (!modal(this).hasClass('show-info')) {
-								wrap(this).addClass('highlight');
-								title(this).addClass('highlight');
-							}
-						}, function() {
-							if (!modal(this).hasClass('show-info')) {
-								wrap(this).removeClass('highlight');
-								title(this).removeClass('highlight');
-							}
-						}).click(function() { // trigger click animations
-
-							// define ele because of this scope in setTimeout
-							var cmodal = modal(this);
-							var ctitle = title(this);
-							var cinfo = info(this);
-							var cgoingBtn = goingBtn(this);
-							var cwrap = wrap(this);
-
-							if(!cmodal.hasClass('show-info')) {
-								cmodal.addClass('show-info');
-								ctitle.addClass('show-info');
-								setTimeout(function() {
-									cinfo.removeClass('slideOutRight').addClass('animated slideInRight');
-									cgoingBtn.removeClass('slideOutLeft').addClass('animated slideInLeft');
-								}, 700);
-							} else if (cinfo.hasClass('slideInRight')) {
-								cinfo.removeClass('slideInRight').addClass('slideOutRight');
-								cgoingBtn.removeClass('slideInLeft').addClass('slideOutLeft');
-								setTimeout(function() {
-									cmodal.removeClass('show-info');
-									ctitle.removeClass('show-info highlight');
-									cwrap.removeClass('highlight');
-								}, 700);
-							}
-						});
-					})();
-					
-					$('.going-btn').mouseenter(function() {
-						if (!$(this).hasClass('going')) $(this).removeClass('slideInLeft').addClass('swing');
-					}).mouseleave(function() {
-						$(this).removeClass('swing');
-					}).click(function() {
-						var barId = $(this).parents('.result').attr('id');
-						var busObj = businessesObj[$(this).parents('.result').attr('id')];
-						var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
-						$.ajax({
-							url: '/api/bars/id=' + window.USER.github.id + '&barId=' + barId + '&add=' + addBoolString,
-							type: 'POST',
-							contentType: 'application/json',
-							data: JSON.stringify(busObj)
-						}).done(function(data) {
-							getUser(updateGoing);
-						});
-					});
-
-				}, 800);
-
-				
 			} else {
 				btn.removeClass('fa-circle-o-notch fa-spin fa-inverse').addClass('fa-chevron-right');
 				search.val('Not Found, Try Again');
 			}
 
 		});
-	  
+
+	}
+
+	function pushBars(result) {
+		search.attr('readOnly', true);
+		$('#result-container').addClass('show');
+
+		// set search bar
+		btn.removeClass('fa-spin rollIn').addClass('fadeOutUp');
+		setTimeout(function() {
+			btn.removeClass('fa-circle-o-notch fa-inverse').addClass('rollIn fa-times');
+		}, 1000);
+
+		// send search bar to top of page
+		$('#search-container').addClass('to-top');
+
+		// append results after search container gots to top, then attach animation controllers
+		setTimeout(function() {
+			result.businesses.forEach(function(business) {
+
+				if (typeof business.image_url !== 'undefined') {
+					$('#result-container').append("<div class='result hide-init' id='" + business.id + "'>" +
+							"<div class='img-container'>" +
+								"<img class='res-img' src='" + business.image_url.replace('/ms.jpg', '/l.jpg') + "'/>" +
+								"<div class='img-modal'></div>" +
+								"<span class='business-title'><a href='" + business.url+ "'><h3>" + business.name + "</h3></a></span>" +
+								"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
+								"<span class='cover'></span>" +
+								"<div class='going-btn'>Going?</div>" +
+							"</div>" +
+						"</div>");
+				}
+			});
+
+			// extract required data for each business
+			var businessesObj = {};
+			result.businesses.forEach(function(business) {
+				businessesObj[business.id] = {
+					'barId': business.id,
+					'name': business.name,
+					'url': business.url,
+					'img': business.image_url,
+					'desc': business.snippet_text,
+				};
+			});
+
+			updateGoing();
+
+			// fade in results
+			$('.result').each(function(index, ele) {
+				setTimeout(function() {
+					$(ele).addClass('fadeInUp animated');
+				}, index*60);
+			});
+
+			// defines animations based on interaction with .cover, in its own function because then I can do some fucked up scope things
+			(function() {
+				// defines .result elements relative to elements you interact with
+				var title = function(cover) {
+					return $(cover).siblings('.business-title');
+				};
+				var wrap = function(cover) {
+					return $(cover).parent();
+				};
+				var modal = function(cover) {
+					return $(cover).siblings('.img-modal');
+				};
+				var info = function(cover) {
+					return $(cover).siblings('.business-info');
+				};
+				var goingBtn = function(cover) {
+					return $(cover).siblings('.going-btn');
+				};
+
+				// add/remove hover classes for bar squares
+				$('.cover').hover(function() {
+					if (!modal(this).hasClass('show-info')) {
+						wrap(this).addClass('highlight');
+						title(this).addClass('highlight');
+					}
+				}, function() {
+					if (!modal(this).hasClass('show-info')) {
+						wrap(this).removeClass('highlight');
+						title(this).removeClass('highlight');
+					}
+				}).click(function() { // trigger click animations
+
+					// define ele because of this scope in setTimeout
+					var cmodal = modal(this);
+					var ctitle = title(this);
+					var cinfo = info(this);
+					var cgoingBtn = goingBtn(this);
+					var cwrap = wrap(this);
+
+					if(!cmodal.hasClass('show-info')) {
+						cmodal.addClass('show-info');
+						ctitle.addClass('show-info');
+						setTimeout(function() {
+							cinfo.removeClass('slideOutRight').addClass('animated slideInRight');
+							cgoingBtn.removeClass('slideOutLeft').addClass('animated slideInLeft');
+						}, 700);
+					} else if (cinfo.hasClass('slideInRight')) {
+						cinfo.removeClass('slideInRight').addClass('slideOutRight');
+						cgoingBtn.removeClass('slideInLeft').addClass('slideOutLeft');
+						setTimeout(function() {
+							cmodal.removeClass('show-info');
+							ctitle.removeClass('show-info highlight');
+							cwrap.removeClass('highlight');
+						}, 700);
+					}
+				});
+			})();
+
+			//attach going-btn hover and click handlers
+			$('.going-btn').mouseenter(function() {
+				if (!$(this).hasClass('going')) $(this).removeClass('slideInLeft').addClass('swing');
+			}).mouseleave(function() {
+				$(this).removeClass('swing');
+			}).click(function() {
+				var barId = $(this).parents('.result').attr('id');
+				var busObj = businessesObj[$(this).parents('.result').attr('id')];
+				var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
+				$.ajax({
+					url: '/api/bars/id=' + window.USER.github.id + '&barId=' + barId + '&add=' + addBoolString,
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify(busObj)
+				}).done(function(data) {
+					getUser(updateGoing);
+				});
+			});
+
+		}, 800);
+
 	}
 
 	function updateGoing() {
