@@ -100,10 +100,20 @@ var main = function() {
 				$(this).removeClass('flash');
 				$(this).html('Going! <i class="fa fa-glass"></i>');
 			}).click(function() {
+
+				var barId = $(this).parents('.result').attr('id');
+				$.ajax({
+					url: '/api/bars/id=' + window.USER.github.id + '&barId=' + barId + '&add=false',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({'barId': barId})
+				});
+
 				var result = $(this).parents('.result');
 				result.addClass('flipOutY');
 				setTimeout(function() {
 					result.remove();
+					if ($('.result').length === 0) $('#result-container').append('<h1>Nothing Planned Today!');
 				}, 1000);
 			});
 
