@@ -253,15 +253,22 @@ var main = function() {
 			return ele.barId;
 		});
 		$('.result').each(function() {
+			// update goingBTn
 			var curBtn = $(this).find('.going-btn');
 			var curTitle = $(this).find('.business-title');
-			if (goingIds.indexOf($(this).attr('id')) !== -1) {
+			var curFlag = $(this).find('.going-flag');
+			var curId = $(this).attr('id');
+			if (goingIds.indexOf(curId) !== -1) {
 				curBtn.html('Going! <i class="fa fa-glass"></i>').removeClass('swing').addClass('going');
 				curTitle.addClass('going');
 			} else if (curBtn.hasClass('going')) {
 				curBtn.text('Going?').removeClass('going');
 				curTitle.removeClass('going');
 			}
+			// update going-flag
+			$.get( "/api/bars/barId=" + curId, function( result ) {
+				curFlag.text(result.numGoing + " Going");
+			});
 		});
 	}
 

@@ -11,7 +11,7 @@ var app = express();
 require('dotenv').load();
 require('./app/config/passport')(passport);
 
-mongoose.connect('mongodb://localhost:27017/fcc-bars');
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/fcc-bars');
 
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));

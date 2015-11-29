@@ -6,7 +6,7 @@ var querystring = require('querystring');
 
 function BarHandler () {
 
-	this.addBar = function (req, res) {
+	this.toggleBar = function (req, res) {
 		var today = Date.now();
 		var body = req.body;
 		var url = querystring.parse(req.url);
@@ -65,6 +65,14 @@ function BarHandler () {
 			});
 		}
 
+	};
+
+	this.getBar = function(req, res) {
+		var url = querystring.parse(req.url);
+		Bar.findOne({'yelpId': url['/api/bars/barId']}, function(err, bar) {
+			if (bar) res.json({'numGoing': bar.goingToday.length});
+			else res.json({'numGoing': 0});
+		});
 	};
 
 }

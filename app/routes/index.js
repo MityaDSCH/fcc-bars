@@ -15,7 +15,7 @@ module.exports = function (app, passport) {
 	}
 
 	var barHandler = new BarHandler();
- 
+
 	app.route('/')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/index.html');
@@ -52,7 +52,10 @@ module.exports = function (app, passport) {
 		}));
 
 	app.route('/api/bars/:id')
-		.post(isLoggedIn, barHandler.addBar)
+		.post(isLoggedIn, barHandler.toggleBar)
+
+	app.route('/api/bars/:id')
+		.get(barHandler.getBar);
 
 	app.route('/api/yelp/:location')
 		.get(function(req, res) {
