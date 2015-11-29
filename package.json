@@ -7,8 +7,8 @@
   "license": "Unlicense",
   "author": "Myles Gearon <myles@mylesgearon.com> (http://mylesgearon.com)",
   "engines": {
-    "node": "~5.0.0",
-    "npm": "~3.4.0"
+    "node": "~4.2.2",
+    "npm": "~3.5.0"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
