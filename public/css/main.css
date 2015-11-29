@@ -451,6 +451,11 @@ hr {
 	margin-left: 10px;
 }
 
+.going-btn a {
+  color: black;
+  text-decoration: none;
+}
+
 /****** Login Styling ******/
 
 #login-wrap {

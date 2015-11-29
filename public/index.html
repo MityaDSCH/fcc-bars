@@ -4,7 +4,7 @@
 
 	<head>
 		<title>FCC Bars</title>
-		
+
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 		<link href="/public/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css">
 		<link href="/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -24,9 +24,9 @@
 				<p class="hide-widescreen">|</p>
 				<a class="menu" href="/profile">Profile</a>
 				<p class="hide-widescreen">|</p>
-				<a class="menu" href="/logout">Logout</a>
+				<a id="auth-btn" class="menu" href="/logout">Logout</a>
 				<hr/>
-				<div> 
+				<div>
 					<p id="nav-credit-text" class="show-widescreen">Website By:</p>
 					<img id="mwlogo-nav" src="public/img/mw-logo-index.svg"/>
 				</div>
@@ -35,13 +35,13 @@
 
 		<div id="search-container">
 			<input id="search" type="text" placeholder="Where to?" required="true">
-				<i id="search-button" class="fa fa-chevron-right fa-lg hide-init"></i> 
+				<i id="search-button" class="fa fa-chevron-right fa-lg hide-init"></i>
 			</input>
 		</div>
 
 		<div id="result-container">
 		</div>
-		
+
 		<script type="text/javascript" src="public/bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="public/js/navController.client.js"></script>
 		<script type="text/javascript" src="public/js/indexController.client.js"></script>

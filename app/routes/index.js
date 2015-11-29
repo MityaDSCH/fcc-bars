@@ -17,7 +17,7 @@ module.exports = function (app, passport) {
 	var barHandler = new BarHandler();
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
+		.get(function (req, res) {
 			res.sendFile(path + '/public/index.html');
 		});
 

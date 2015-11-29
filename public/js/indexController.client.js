@@ -7,9 +7,13 @@ var main = function() {
 	function getUser(callback) {
 		var apiUrl = window.location.origin + '/api/:id';
 		$.get(apiUrl , function( user ) {
-	      window.USER = user;
-	      $('#username-display').text('Hello ' + (typeof user.github.username === 'undefined' ? 'Stranger' : user.github.username));
-	      if (typeof callback === 'function') callback();
+	      if (typeof user === 'object') window.USER = user;
+				else {
+					window.USER = undefined;
+					$('#auth-btn').text('Login');
+				}
+	      $('#username-display').text('Hello ' + (typeof window.USER === 'undefined' ? 'Stranger' : user.github.username));
+				if (typeof callback === 'function') callback();
 	   });
 	}
 
@@ -123,6 +127,9 @@ var main = function() {
 		setTimeout(function() {
 			result.businesses.forEach(function(business) {
 
+				if (window.USER === undefined) var goingBtnStr = "<div class='going-btn'><a href='/login'>Login</a></div>";
+				else var goingBtnStr = "<div class='going-btn'>Going?</div>";
+
 				if (typeof business.image_url !== 'undefined') {
 					$('#result-container').append("<div class='result hide-init' id='" + business.id + "'>" +
 							"<div class='going-flag'>0 Going</div>" +
@@ -132,7 +139,7 @@ var main = function() {
 								"<span class='business-title'><a href='" + business.url+ "'><h3>" + business.name + "</h3></a></span>" +
 								"<span class='business-info'><p>" + business.snippet_text + "</p></span>" +
 								"<span class='cover'></span>" +
-								"<div class='going-btn'>Going?</div>" +
+								goingBtnStr +
 							"</div>" +
 						"</div>");
 				}
@@ -231,17 +238,19 @@ var main = function() {
 			}).mouseleave(function() {
 				$(this).removeClass('swing');
 			}).click(function() {
-				var barId = $(this).parents('.result').attr('id');
-				var busObj = businessesObj[$(this).parents('.result').attr('id')];
-				var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
-				$.ajax({
-					url: '/api/bars/id=' + window.USER.github.id + '&barId=' + barId + '&add=' + addBoolString,
-					type: 'POST',
-					contentType: 'application/json',
-					data: JSON.stringify(busObj)
-				}).done(function(data) {
-					getUser(updateGoing);
-				});
+				if (window.USER !== undefined) {
+					var barId = $(this).parents('.result').attr('id');
+					var busObj = businessesObj[$(this).parents('.result').attr('id')];
+					var addBoolString = $(this).hasClass('going') ? 'false' : 'true';
+					$.ajax({
+						url: '/api/bars/id=' + window.USER.github.id + '&barId=' + barId + '&add=' + addBoolString,
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify(busObj)
+					}).done(function(data) {
+						getUser(updateGoing);
+					});
+				}
 			});
 
 		}, 800);
@@ -249,21 +258,26 @@ var main = function() {
 	}
 
 	function updateGoing() {
-		var goingIds = window.USER.goingToday.map(function(ele) {
-			return ele.barId;
-		});
+		if (window.USER !== undefined) {
+			var goingIds = window.USER.goingToday.map(function(ele) {
+				return ele.barId;
+			});
+		}
 		$('.result').each(function() {
 			// update goingBTn
 			var curBtn = $(this).find('.going-btn');
 			var curTitle = $(this).find('.business-title');
 			var curFlag = $(this).find('.going-flag');
 			var curId = $(this).attr('id');
-			if (goingIds.indexOf(curId) !== -1) {
-				curBtn.html('Going! <i class="fa fa-glass"></i>').removeClass('swing').addClass('going');
-				curTitle.addClass('going');
-			} else if (curBtn.hasClass('going')) {
-				curBtn.text('Going?').removeClass('going');
-				curTitle.removeClass('going');
+
+			if (window.USER !== undefined) {
+				if (goingIds.indexOf(curId) !== -1) {
+					curBtn.html('Going! <i class="fa fa-glass"></i>').removeClass('swing').addClass('going');
+					curTitle.addClass('going');
+				} else if (curBtn.hasClass('going')) {
+					curBtn.text('Going?').removeClass('going');
+					curTitle.removeClass('going');
+				}
 			}
 			// update going-flag
 			$.get( "/api/bars/barId=" + curId, function( result ) {
