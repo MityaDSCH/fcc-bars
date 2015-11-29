@@ -210,9 +210,9 @@ hr {
 	margin: 0;
 	border: 0;
     height: 1px;
-    background-image: linear-gradient(to right, 
-    								  rgba(0, 0, 0, 0), 
-    								  rgba(255, 255, 255, 0.75), 
+    background-image: linear-gradient(to right,
+    								  rgba(0, 0, 0, 0),
+    								  rgba(255, 255, 255, 0.75),
     								  rgba(0, 0, 0, 0));
 }
 
@@ -263,6 +263,31 @@ hr {
 	margin: 16px 5px;
 }
 
+.going-flag {
+  position: absolute;
+  height: 30px;
+  width: 200px;
+  left: 50px;
+  top: 275px;
+  z-index: -1;
+
+  background-color: #444;
+  box-shadow: 0 0 5px 2.5px black;
+  opacity: .8;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Raleway';
+  font-size: 18px;
+
+  visibility: hidden;
+}
+
+.going-flag.animated {
+  visibility: visible;
+}
+
 .img-container {
 	position: absolute;
 	top: 25px;
@@ -270,6 +295,7 @@ hr {
 	width: 250px;
 	height: 250px;
 	margin: 25;
+  z-index: 1;
 
 	overflow: hidden;
 
@@ -587,7 +613,7 @@ hr {
 	.FCC-text {
 		font-size: 40px;
 	}
-	#result-container{ 
+	#result-container{
 		top: 145px;
 	}
 }

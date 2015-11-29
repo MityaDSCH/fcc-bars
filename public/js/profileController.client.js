@@ -14,6 +14,7 @@ var main = function() {
 		    user.goingToday.forEach(function(business) {
 				if (typeof business.img !== 'undefined') {
 					$('#result-container').append("<div class='result hide-init' id='" + business.barId + "'>" +
+					"<div class='going-flag'>0 Going</div>" +
 							"<div class='img-container'>" +
 								"<img class='res-img' src='" + business.img.replace('/ms', '/l') + "'/>" +
 								"<div class='img-modal'></div>" +
@@ -53,17 +54,22 @@ var main = function() {
 				var goingBtn = function(cover) {
 					return $(cover).siblings('.going-btn');
 				};
+				var goingFlg = function(cover) {
+					return $(cover).parent().siblings('.going-flag');
+				};
 
 				// add/remove hover classes for bar squares
 				$('.cover').hover(function() {
 					if (!modal(this).hasClass('show-info')) {
 						wrap(this).addClass('highlight');
 						title(this).addClass('highlight');
+						goingFlg(this).removeClass('slideOutUp').addClass('animated slideInDown');
 					}
 				}, function() {
 					if (!modal(this).hasClass('show-info')) {
 						wrap(this).removeClass('highlight');
 						title(this).removeClass('highlight');
+						goingFlg(this).removeClass('slideInDown').addClass('slideOutUp');
 					}
 				}).click(function() { // trigger click animations
 
@@ -73,10 +79,12 @@ var main = function() {
 					var cinfo = info(this);
 					var cgoingBtn = goingBtn(this);
 					var cwrap = wrap(this);
+					var cflag = goingFlg(this);
 
 					if(!cmodal.hasClass('show-info')) {
 						cmodal.addClass('show-info');
 						ctitle.addClass('show-info');
+						cflag.addClass('slideInDown').removeClass('slideOutUp');
 						setTimeout(function() {
 							cinfo.removeClass('slideOutRight').addClass('animated slideInRight');
 							cgoingBtn.removeClass('slideOutLeft').addClass('animated slideInLeft');
@@ -84,6 +92,7 @@ var main = function() {
 					} else if (cinfo.hasClass('slideInRight')) {
 						cinfo.removeClass('slideInRight').addClass('slideOutRight');
 						cgoingBtn.removeClass('slideInLeft').addClass('slideOutLeft');
+						cflag.removeClass('slideInDown').addClass('slideOutUp');
 						setTimeout(function() {
 							cmodal.removeClass('show-info');
 							ctitle.removeClass('show-info highlight');
