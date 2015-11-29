@@ -8,7 +8,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 
 var app = express();
-require('dotenv').load();
+if (!process.env.CONSUMER_SECRET) require('dotenv').load();
 require('./app/config/passport')(passport);
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/fcc-bars');
