@@ -18,7 +18,7 @@ p {
 }
 
 #mw-logo-login {
-	width: 100%;
+	width: 90%;
 	height: auto;
 }
 
@@ -46,7 +46,7 @@ p {
 }
 
 #search-container.to-top {
-	top: 10%;
+	top: 90px;
 	transition: all .8s ease-in-out;
 }
 
@@ -69,7 +69,7 @@ p {
 }
 
 #search:focus, #search:valid {
-	width: 80%;
+	width: 75%;
 	text-align: left;
 	transition: all 1s cubic-bezier(.18,.94,.14,1);
 }
@@ -547,7 +547,7 @@ hr {
 
 #result-container.profile {
 	position: relative;
-	margin-top: -80px;
+	margin-top: -130px;
 }
 
 /*Media Queries*/
@@ -555,9 +555,6 @@ hr {
 @media screen and (min-width: 400px) {
 	#nav-container {
 		width: 60%;
-	}
-	#mw-logo-login {
-		width: 90%;
 	}
 	.#mw-logo-login-path {
 		stroke-width: 13;
