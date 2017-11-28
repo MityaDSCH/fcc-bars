@@ -286,7 +286,7 @@ hr {
 }
 
 .img-modal.show-info {
-	opacity: .6;
+	opacity: .8;
 	box-shadow: inset 0 0 10px black;
 }
 
